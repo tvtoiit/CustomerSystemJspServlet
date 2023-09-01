@@ -1,0 +1,97 @@
+#main {
+	background-color: #ccffff;
+	padding: 20px 15px;
+	height: 969px;
+}
+
+.header-br {
+	border: 1px solid #000000;
+	margin-top: 30px;
+}
+.header-text {
+	color: #ff0000;
+	font-size: 35px;
+}
+
+.content-login__header h3 {
+	color: #5066ff;
+	font-size: 40px;
+	margin-bottom: 10px;
+}
+
+.content-text {
+	font-size: 20px;
+	margin-top: 10px;
+}
+
+.content-login {
+	text-align: center;
+}
+
+.form-label {
+	font-size: 20px;
+	display: flex;
+	justify-content: start;
+	min-width: 92px;
+	
+}
+
+#lblErrorMessage {
+	color: #ff0000;
+	font-size: 18px;
+	padding: 30px;
+}
+
+.content-login__container {
+	margin-top: 20px;
+}
+
+.form-submit {
+	background-color: #c0c0c0;
+	color: #000000;
+}
+
+#txtUserID {
+	font-size: 30px;
+}
+
+#txtPassword {
+	font-size: 30px;
+}
+
+.form-group {
+	display: flex;
+	justify-content: center;
+}
+
+.form-group__password {
+	margin-top: 10px;
+	display: flex;
+	justify-content: center;
+}
+
+.form-group__btn {
+	margin-top: 50px;
+}
+
+#btnClear {
+	margin-left: 253px;
+	margin-right: -67px;
+}
+
+.form-group__btn button {
+	font-size: 20px;
+	padding: 5px 25px;
+}
+
+.footer-text__copyright {
+	font-size: 20px;
+	margin-top: 5px;
+}
+
+.footer {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
