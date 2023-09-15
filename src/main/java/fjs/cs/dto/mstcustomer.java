@@ -2,7 +2,7 @@ package fjs.cs.dto;
 
 import java.math.BigDecimal;
 
-public class T002Dto extends AbstractDto {
+public class mstcustomer extends AbstractDto<mstcustomer> {
 	private BigDecimal customerId;
 	private String customerName;
 	private String sex;
@@ -10,11 +10,11 @@ public class T002Dto extends AbstractDto {
 	private String email;
 	private String address;
 	
-	public T002Dto() {
+	public mstcustomer() {
 		
 	}
 	
-	public T002Dto(BigDecimal customerId, String customerName, String sex, String birthDay, String email, String address) {
+	public mstcustomer(BigDecimal customerId, String customerName, String sex, String birthDay, String email, String address) {
 		this.customerId = customerId;
 		this.customerName = customerName;
 		this.sex = sex;

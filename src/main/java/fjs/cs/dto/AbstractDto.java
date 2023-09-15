@@ -1,24 +1,31 @@
 package fjs.cs.dto;
 
 import java.sql.Timestamp;
+import java.util.List;
 
-public class AbstractDto {
+public class AbstractDto<T> {
 	private Timestamp deleteYmd;
 	private Timestamp insertYmd;
 	private int insertPsnCd;
 	private Timestamp updateYmd;
+	private List<T> pageData;
 	private int updatePsnCd;
-	
-	public AbstractDto() {
-		
+	private Integer page;
+
+	public Integer getPage() {
+		return page;
 	}
-	
-	public AbstractDto(Timestamp deleteYmd, Timestamp insertYmd, int insertPsnCd ,Timestamp updateYmd, int updatePsnCd) {
-		this.deleteYmd = deleteYmd;
-		this.insertYmd = insertYmd;
-		this.insertPsnCd = insertPsnCd;
-		this.updateYmd = updateYmd;
-		this.updatePsnCd = updatePsnCd;
+
+	public void setPage(Integer page) {
+		this.page = page;
+	}
+
+	public List<T> getPageData() {
+		return pageData;
+	}
+
+	public void setPageData(List<T> pageData) {
+		this.pageData = pageData;
 	}
 
 	public Timestamp getDeleteYmd() {

@@ -2,16 +2,16 @@ package fjs.cs.dto;
 
 import java.math.BigDecimal;
 
-public class T001Dto extends AbstractDto {
+public class mstuser extends AbstractDto<mstuser> {
 	private BigDecimal psnCd;
 	private String userId;
 	private String passWord;
 	private String userName;
-	public T001Dto() {
+	public mstuser() {
 		
 	}
 	
-	public T001Dto(BigDecimal psnCd, String userId, String passWord, String userName) {
+	public mstuser(BigDecimal psnCd, String userId, String passWord, String userName) {
 		this.psnCd = psnCd;
 		this.userId = userId;
 		this.passWord = passWord;
