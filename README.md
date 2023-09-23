@@ -15,6 +15,7 @@ B. T002(Search)
 
 c. T003(Edit)
   * Gồm 2 chức năng:
+    
     1. Nếu được truyền CustomerID thì thực hiện chức năng Edit
     2. Ngược lại, nếu không được truyền CustomerID thì thực hiện chức năng Add
     3. Clear màn hình bao gồm cả Error message
