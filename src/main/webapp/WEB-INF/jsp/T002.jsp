@@ -27,36 +27,47 @@
 				<div class = "search-container__logo">
 					<div>Welcome </div>
 				</div>
-		
-		
 				<a href = "#" class = "search-container__logout">
 					Log Out
 				</a>
 			</div>
 			<div class = "search-container__line"></div>
-	
-	
 <form id = "form-Search" action ="/CustomerJspServlet/T002" method = "POST">
 	<div class = "search-container__handalSearch">
 		<div class = "search-container__handalSearch--margin handalSearch-customerName">
 			<div class = "handalSearch-customercommon handalSearch-customerName__text">Customer Name</div>
-			<input id = "txtCustomerName" class="input_Customer--common" name = "txtCustomerName" maxLength = "50"/>
+			<c:if test ="${not empty name}">			
+				<input id ="txtCustomerName" value="${name}" class="input_Customer--common" name ="txtCustomerName" maxLength ="50"/>
+			</c:if>
+			<c:if test="${empty name }">
+				<input id = "txtCustomerName" class="input_Customer--common" name = "txtCustomerName" maxLength = "50"/>
+			</c:if>
 		</div>
 		
 		<div class = "search-container__handalSearch--margin handalSearch-customerSex">
 			<div class = "handalSearch-customercommon handalSearch-customerSex__text">Sex</div>
 			<select name="browser" class ="input_Customer--select" id ="cboSex">
 				<option value="">blank</option>
-		      	<option value="0">Male</option>
-		     	 <option value="1">Female</option>
+		      	<option value="0" ${sex == '0' ? 'selected' : ''}>Male</option>
+    			<option value="1" ${sex == '1' ? 'selected' : ''}>Female</option>
 			</select>
 		</div>
 		
 		<div class = "search-container__handalSearch--margin handalSearch-BirthdayFrom">
 			<div class = "handalSearch-customercommon handalSearch-BirthdayFrom__text">Birthday</div>
-			<input id = "txtBirthdayForm" class = "input_Customer--common txtCustomerValidateFROM" name = "txtBirthdayFromName" maxLength = "10"/>
+			<c:if test="${empty birthdayFrom}">
+				<input id ="txtBirthdayForm" class ="input_Customer--common txtCustomerValidateFROM" name ="txtBirthdayFromName" maxLength ="10"/>
+			</c:if>
+			<c:if test="${not empty birthdayFrom}">
+				<input id ="txtBirthdayForm" value="${birthdayFrom}" class ="input_Customer--common txtCustomerValidateFROM" name ="txtBirthdayFromName" maxLength ="10"/>
+			</c:if>
 			<label for="html" class = "handalSearch-customercommon handalSearch-BirthdayFrom__ngangcach">～</label>
-			<input id = "txtBirthdayTo" class = "input_Customer--common txtCustomerValidateTO" name = "txtBirthdayToName" maxLength = "10"/>
+			<c:if test="${empty birthdayTo}">
+				<input id ="txtBirthdayTo" class ="input_Customer--common txtCustomerValidateTO" name ="txtBirthdayToName" maxLength ="10"/>			
+			</c:if>
+			<c:if test="${not empty birthdayTo}">
+				<input id ="txtBirthdayTo" value="${birthdayTo}" class ="input_Customer--common txtCustomerValidateTO" name ="txtBirthdayToName" maxLength ="10"/>	
+			</c:if>
 		</div>
 		<div class = "handalSearch-btnSearch">
 			<button type ="submit" id = "btnSearch">Search</button>
@@ -64,25 +75,31 @@
 	</div>
 
 	
-	<div class = "search-container__btnContext--chuyenhuong">
-		<div class = "search-container__btnContext--start">
-			<button type="submit"><a id="btnFirst" href="/CustomerJspServlet/T002?page=1">&lt;&lt;</a></button>
-			<c:if test="${tag > 1 }">
-				<a id="btnPrevious" href="/CustomerJspServlet/T002?page=${tag-1}">&lt;</a>
-			</c:if>
-			<label for="html" class ="search-container__btnContext--textstart">Previous</label>
-		</div>
-		<input type="hidden" value="" id="page" name="page"/>
-		<input type="hidden" value="" id="maxPageItem" name="maxPageItem"/>
-		<div class = "search-container__btnContext--end">
-			<label for="html" class = "search-container__btnContext--textend">Next</label>
-			<button id = "btnNext">&gt;</button>
-			<c:if test="${tag > endP }">
-				<a id="btnNext" href="/CustomerJspServlet/T002?page=${tag + 1}">&gt;</a>
-			</c:if>
-			<a id="btnPrevious" href="/CustomerJspServlet/T002?page=${endP}">&gt;&gt;</a>
-		</div>
-	</div>
+	<div class="search-container__btnContext--chuyenhuong">
+    <div class="search-container__btnContext--start">
+        <button type="submit" name="page" value="1">&lt;&lt;</button>
+        <c:if test="${tag > 1}">
+     		<button type="submit" name="page" value="2">&lt;</button>
+        </c:if>
+        <c:if test="${tag <= 1}">
+        	<button disabled type="submit" name="page" value="2">&lt;</button>
+        </c:if>
+        <label for="html" class="search-container__btnContext--textstart">Previous</label>
+    </div>
+    
+    <div class="search-container__btnContext--end">
+        <label for="html" class="search-container__btnContext--textend">Next</label>
+       	<c:if test="${tag == endl }">
+       		<button disabled type="submit" name="page" value="3">&gt;</button>        	
+       	</c:if>
+       	<c:if test="${tag < endl }">
+       		<button type="submit" name="page" value="3">&gt;</button>  
+       	</c:if>
+        <button type="submit" name="page" value="4">&gt;&gt;</button>
+    </div>
+     	<input type="hidden" name="tag" value="${tag}"/>
+</div>
+
 	
 		<table class = "search-container__table">
 	        <tr class = "search-container__table--tieude">
@@ -94,18 +111,7 @@
 	            <th>Address</th>
 	        </tr>
 	        
-	        <c:forEach items="${listData}" var="dept">
-	            <tr>
-	                <td><input type="checkbox" name="checkboxAll" value="${dept.customerId}"></td>
-	                <td><a href="/CustomerJspServlet/T003?id=${dept.customerId}"> ${dept.customerId} </a></td>
-	                <td>${dept.customerName }</td>
-	                <td>${dept.sex}</td>
-	                <td>${dept.birthDay}</td>
-	                <td>${dept.address}</td>
-	            </tr>
-	        </c:forEach> 
-	   
-	        <c:forEach items="${listDataSearch}" var="dept">
+	        <c:forEach items="${model.pageData}" var="dept">
 	            <tr>
 	                <td><input type="checkbox" name="checkboxAll" value="${dept.customerId}"></td>
 	                <td><a href="/CustomerJspServlet/T003?id=${dept.customerId}"> ${dept.customerId} </a></td>

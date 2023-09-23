@@ -20,7 +20,7 @@ public class T002Dao extends AbstractDao<mstcustomer> implements IT002Dao {
 	 */
 	@Override
 	public List<mstcustomer> getData() {
-		String sql = "SELECT CUSTOMER_ID, CUSTOMER_NAME, CASE WHEN SEX = 0 THEN 'Male' ELSE 'Female' END AS SEX, BIRTHDAY, ADDRESS FROM mstcustomer WHERE DELETE_YMD IS NULL ORDER BY CUSTOMER_ID LIMIT 15";
+		String sql = "SELECT CUSTOMER_ID, CUSTOMER_NAME, CASE WHEN SEX = 0 THEN 'Male' ELSE 'Female' END AS SEX, BIRTHDAY, ADDRESS FROM mstcustomer WHERE DELETE_YMD IS NULL ORDER BY CUSTOMER_ID";
 		return query(sql, new T002Mapper());
 	}
 
@@ -76,7 +76,13 @@ public class T002Dao extends AbstractDao<mstcustomer> implements IT002Dao {
 
 	@Override
 	public List<mstcustomer> pagingData(int index) {
-		String sql = "select CUSTOMER_ID, CUSTOMER_NAME, CASE WHEN SEX = 0 THEN 'Male' else 'Female' end as SEX, BIRTHDAY, ADDRESS from MSTCUSTOMER where DELETE_YMD is null order by CUSTOMER_ID OFFSET ? ROWS FETCH NEXT 15 ROWS ONLY";
-		return query(sql, new T002Mapper(), index);
+		String query = "SELECT CUSTOMER_ID, CUSTOMER_NAME, IF(SEX = 0, 'Male', 'Female') AS SEX, BIRTHDAY, ADDRESS "
+	             + "FROM MSTCUSTOMER "
+	             + "WHERE DELETE_YMD IS NULL "
+	             + "ORDER BY CUSTOMER_ID "
+	             + "LIMIT ?, 15";
+
+		 List<mstcustomer> list = query(query, new T002Mapper(), (index - 1) * 15);
+		 return list;
 	}
 }
