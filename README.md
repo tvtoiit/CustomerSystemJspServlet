@@ -1,5 +1,6 @@
 # customersystem
 Hệ thống có 3 màn hình
+
 A. T001(Login)
   1. Đăng nhập vào hệ thống
   2. Clear màn hình bao gồm cả Error message
