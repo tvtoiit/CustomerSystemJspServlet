@@ -14,7 +14,7 @@ public class T002Mapper implements RowMapper<mstcustomer> {
 			t002Dto.setCustomerName(resultSet.getString("CUSTOMER_NAME"));
 			t002Dto.setSex(resultSet.getString("SEX"));
 			t002Dto.setBirthDay(resultSet.getString("BIRTHDAY"));
-//			t002Dto.setEmail(resultSet.getString("EMAIL"));
+			//t002Dto.setEmail(resultSet.getString("EMAIL"));
 			t002Dto.setAddress(resultSet.getString("ADDRESS"));
 //			t002Dto.setDeleteYmd(resultSet.getTimestamp("DELETE_YMD"));
 //			t002Dto.setInsertYmd(resultSet.getTimestamp("INSERT_YMD"));

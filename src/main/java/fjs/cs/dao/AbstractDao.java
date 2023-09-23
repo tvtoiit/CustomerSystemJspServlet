@@ -1,5 +1,6 @@
 package fjs.cs.dao;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -28,7 +29,8 @@ public class AbstractDao<T> extends AbstractCommon implements GennericDao<T> {
 	@Override
 	public <T> List<T> query(String sql, RowMapper<T> rowMapper, Object... parammeters) {
 		List<T> result = new ArrayList<>();
-		try (Connection connection = getConnection(); PreparedStatement stament = connection.prepareStatement(sql)) {
+		try (Connection connection = getConnection(); 
+			PreparedStatement stament = connection.prepareStatement(sql)) {
 			// Đặt các tham số tùy chọn trong PreparedStatement
 			setParameter(stament, parammeters);
 
@@ -121,7 +123,7 @@ public class AbstractDao<T> extends AbstractCommon implements GennericDao<T> {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-	}
+	}	
 	
 	/**
 	 * Đặt các tham số vào PreparedStatement dựa trên kiểu dữ liệu của từng tham số.
@@ -139,12 +141,18 @@ public class AbstractDao<T> extends AbstractCommon implements GennericDao<T> {
 				if (parammeter instanceof String) {
 					stament.setString(index, (String) parammeter);
 				}
+				if (parammeter instanceof Integer) {
+					stament.setInt(index, (Integer)parammeter);
+				}
 				if (parammeter instanceof Timestamp) {
 					stament.setTimestamp(index, (Timestamp) parammeter);
+				}
+				if (parammeter instanceof BigDecimal) {
+					stament.setBigDecimal(index, (BigDecimal)parammeter);
 				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-	}
+	} 
 }

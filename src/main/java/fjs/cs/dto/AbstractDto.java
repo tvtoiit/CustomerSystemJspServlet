@@ -6,10 +6,10 @@ import java.util.List;
 public class AbstractDto<T> {
 	private Timestamp deleteYmd;
 	private Timestamp insertYmd;
-	private int insertPsnCd;
+	private Integer insertPsnCd;
 	private Timestamp updateYmd;
 	private List<T> pageData;
-	private int updatePsnCd;
+	private Integer updatePsnCd;
 	private Integer page;
 
 	public Integer getPage() {
@@ -44,11 +44,11 @@ public class AbstractDto<T> {
 		this.insertYmd = insertYmd;
 	}
 
-	public int getInsertPsnCd() {
+	public Integer getInsertPsnCd() {
 		return insertPsnCd;
 	}
 
-	public void setInsertPsnCd(int insertPsnCd) {
+	public void setInsertPsnCd(Integer insertPsnCd) {
 		this.insertPsnCd = insertPsnCd;
 	}
 
@@ -60,11 +60,11 @@ public class AbstractDto<T> {
 		this.updateYmd = updateYmd;
 	}
 
-	public int getUpdatePsnCd() {
+	public Integer getUpdatePsnCd() {
 		return updatePsnCd;
 	}
 
-	public void setUpdatePsnCd(int updatePsnCd) {
+	public void setUpdatePsnCd(Integer updatePsnCd) {
 		this.updatePsnCd = updatePsnCd;
 	}
 }

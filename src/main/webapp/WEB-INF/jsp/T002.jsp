@@ -118,7 +118,7 @@
     </table>
 		
 		<div class = "search-container__btnnav">
-			<button class = "search-container__nav-btnAdd">Add New</button>
+			<a href="/CustomerJspServlet/T003" class="search-container__nav-btnAdd">Add New</a>
 			<button type = "submit" class = "search-container__nav-btnAdd" onclick="deleteRows()" >Delete</button>
 		</div>
 	</form>

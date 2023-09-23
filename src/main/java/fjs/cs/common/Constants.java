@@ -19,9 +19,7 @@ public class Constants {
 	
 	//message did not input password
 	public static final String MESSAGE_ERROR_NO_INPUT_PASSWORD = "Bạn chưa nhập giá trị password";
-	
-	
-	
+
 	public static final String MESSAGE_CHECKOFF = "行を選択してください。";
 	
 	public static final String MESSAGE_TO_SMALL_FROM = "There is an error in the range input of Birthday";

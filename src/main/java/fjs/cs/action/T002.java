@@ -11,40 +11,47 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import fjs.cs.common.Constants;
+import fjs.cs.dao.T002Dao;
 import fjs.cs.dto.mstcustomer;
-import fjs.cs.sevices.T002Sevice;
-import fjs.cs.sevices.impl.IT002Sevice;
 
 @WebServlet("/T002")
 public class T002 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private IT002Sevice t002Sevice;
 
-	public T002() {
-		t002Sevice = new T002Sevice();
-	}
-
+	T002Dao t002Dao = new T002Dao();
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		List<mstcustomer> result = t002Sevice.getData();
+		List<mstcustomer> result = t002Dao.getData();
 		req.setAttribute("listData", result);
 
 		RequestDispatcher myRD = req.getRequestDispatcher(Constants.T002_SEARCH);
 		myRD.forward(req, resp);
 	}
-
+	
+	/**
+	 * Xử lý yêu cầu POST từ trang T002.
+	 *
+	 * @param request HttpServletRequest của yêu cầu.
+	 * @param resp HttpServletResponse để xử lý phản hồi.
+	 * @throws ServletException Nếu có lỗi trong quá trình xử lý yêu cầu.
+	 * @throws IOException Nếu có lỗi trong việc xử lý đầu ra.
+	 */
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse resp) throws ServletException, IOException {
 		resp.setContentType("text/html");
 		mstcustomer t002Dto = new mstcustomer();
+		
+		// Lấy dữ liệu từ các trường đầu vào
 		String name = request.getParameter("txtCustomerName");
 		String sex = request.getParameter("browser");
 		String birthdayFrom = request.getParameter("txtBirthdayFromName");
 		String birthdayTo = request.getParameter("txtBirthdayToName");
-		List<mstcustomer> resultSearch = t002Sevice.getDataSearch(name, sex, birthdayFrom, birthdayTo);
+		
+		// Tìm kiếm dữ liệu dựa trên các tham số đầu vào
+		List<mstcustomer> resultSearch = t002Dao.getDataSearch(name, sex, birthdayFrom, birthdayTo);
 
 		if (resultSearch.size() > 15) { 
-	        // Thực hiện phân trang 
+			// Thực hiện phân trang nếu kết quả tìm kiếm có nhiều hơn 15 bản ghi
 	        String pageStr = request.getParameter("page");
 	        int page;
 	        if (pageStr != null && !pageStr.isEmpty()) {
@@ -78,14 +85,6 @@ public class T002 extends HttpServlet {
 
 	@Override
 	protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		super.doDelete(req, resp);
 	}
-
-	@Override
-	protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		super.doPut(req, resp);
-	}
-
 }
