@@ -75,14 +75,27 @@ public class T002Dao extends AbstractDao<mstcustomer> implements IT002Dao {
 	}
 
 	@Override
-	public List<mstcustomer> pagingData(int index) {
-		String query = "SELECT CUSTOMER_ID, CUSTOMER_NAME, IF(SEX = 0, 'Male', 'Female') AS SEX, BIRTHDAY, ADDRESS "
-	             + "FROM MSTCUSTOMER "
-	             + "WHERE DELETE_YMD IS NULL "
-	             + "ORDER BY CUSTOMER_ID "
-	             + "LIMIT ?, 15";
-
-		 List<mstcustomer> list = query(query, new T002Mapper(), (index - 1) * 15);
-		 return list;
+	public List<mstcustomer> deleteData(String[] selecValue) {
+	    List<mstcustomer> listDelete = new ArrayList<mstcustomer>();
+	    try {
+	        String query = "UPDATE MSTCUSTOMER "
+	                     + "SET Delete_YMD = CURRENT_TIMESTAMP "
+	                     + "WHERE customer_Id IN (";
+	        for (int i = 0; i < selecValue.length; i++) {
+	            String[] ids = selecValue[i].split(",");
+	            for (int j = 0; j < ids.length; j++) {
+	                query += "?,";
+	            }
+	        }
+	        query = query.substring(0, query.length() - 1) + ")";
+	        
+	        // Gọi hàm chung update để thực hiện truy vấn cập nhật
+	        update(query, (Object[]) selecValue);
+	        
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return listDelete;
 	}
+
 }
