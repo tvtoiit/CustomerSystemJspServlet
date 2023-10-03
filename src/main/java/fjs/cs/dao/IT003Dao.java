@@ -1,4 +1,4 @@
-package fjs.cs.dao.impl;
+package fjs.cs.dao;
 
 import java.math.BigDecimal;
 import java.util.List;

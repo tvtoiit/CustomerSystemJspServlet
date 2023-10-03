@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import fjs.cs.common.Constants;
-import fjs.cs.dao.T002Dao;
+import fjs.cs.dao.impl.T002Dao;
 import fjs.cs.dto.mstcustomer;
 
 @WebServlet("/T002")

@@ -1,8 +1,8 @@
-package fjs.cs.dao;
+package fjs.cs.dao.impl;
 
 import java.util.List;
 
-import fjs.cs.dao.impl.IT001Dao;
+import fjs.cs.dao.IT001Dao;
 import fjs.cs.dto.mstuser;
 import fjs.cs.rowmapper.MstUserMapper;
 import fjs.cs.rowmapper.T001Mapper;

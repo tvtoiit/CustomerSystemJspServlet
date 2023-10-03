@@ -1,9 +1,9 @@
-package fjs.cs.dao;
+package fjs.cs.dao.impl;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-import fjs.cs.dao.impl.IT003Dao;
+import fjs.cs.dao.IT003Dao;
 import fjs.cs.dto.mstcustomer;
 import fjs.cs.rowmapper.T003Mapper;
 

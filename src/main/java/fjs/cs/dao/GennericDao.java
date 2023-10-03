@@ -1,4 +1,4 @@
-package fjs.cs.dao.impl;
+package fjs.cs.dao;
 
 import java.util.List;
 
@@ -18,7 +18,7 @@ public interface GennericDao<T> {
      * @param parameters  Các tham số tùy chọn để đặt trong PreparedStatement.
      * @return Danh sách các đối tượng kiểu U chứa kết quả của truy vấn.
      */
-	<U> List<U> query(String sql, RowMapper<U> rowMapper, Object... parameters);
+	<T> List<T> query(String sql, RowMapper<T> rowMapper, Object... parammeters);
 	
 	/**
      * Thực hiện một truy vấn cập nhật (INSERT, UPDATE, DELETE) vào cơ sở dữ liệu.

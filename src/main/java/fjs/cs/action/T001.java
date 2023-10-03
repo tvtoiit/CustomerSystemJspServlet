@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import fjs.cs.common.Constants;
-import fjs.cs.dao.T001Dao;
+import fjs.cs.dao.impl.T001Dao;
 import fjs.cs.dto.mstuser;
 
 @WebServlet("/T001")
