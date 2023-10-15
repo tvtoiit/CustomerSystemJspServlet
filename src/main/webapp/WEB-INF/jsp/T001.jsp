@@ -17,7 +17,7 @@
 	<div class="content">
 			<div class="content-text">Login</div>
 			<div class="content-login">
-				<form action="/CustomerJspServlet/T001" name="frmLogin" method="POST" >
+				<form action="./T001" name="frmLogin" method="POST" >
 					<div class="content-login__header">
 						<h3>LOGIN</h3>
 						<div id="lblErrorMessage">
@@ -52,13 +52,9 @@
 			</div>
 		</div>
 	
-<script >
-	clearForm = () => {
-		document.getElementById("txtUserID").value = "";
-		document.getElementById("txtPassword").value = "";
-		document.querySelector(".error-message").innerHTML = "";
-	}
-</script>	
+	<script>
+		<%@include file ="/WEB-INF/js/T001.js"%>
+	</script>	
 </body>
 <%@ include file="/WEB-INF/include/footer.jsp"%>
 

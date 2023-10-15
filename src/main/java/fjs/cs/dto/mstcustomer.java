@@ -1,6 +1,7 @@
 package fjs.cs.dto;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public class mstcustomer extends AbstractDto<mstcustomer> {
 	private BigDecimal customerId;

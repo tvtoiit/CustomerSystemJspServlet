@@ -30,10 +30,16 @@ public class T003Dao extends AbstractDao<mstcustomer> implements IT003Dao {
 	 * @return 	Danh sách các đối tượng mstcustomer chứa thông tin khách hàng tìm thấy.
 	 */
 	@Override
-	public List<mstcustomer> getCustomerById(Integer id) {
-		String sql = "SELECT CUSTOMER_ID, CUSTOMER_NAME, SEX, BIRTHDAY, EMAIL, ADDRESS FROM mstcustomer WHERE CUSTOMER_ID = ?";
-		return query(sql, new T003Mapper(), id);
+	public mstcustomer getCustomerById(Integer id) {
+	    String sql = "SELECT CUSTOMER_ID, CUSTOMER_NAME, SEX, BIRTHDAY, EMAIL, ADDRESS FROM mstcustomer WHERE CUSTOMER_ID = ?";
+	    List<mstcustomer> customers = query(sql, new T003Mapper(), id);
+	    if (customers != null && !customers.isEmpty()) {
+	        return customers.get(0); // Trả về khách hàng đầu tiên nếu có
+	    } else {
+	        return null;
+	    }
 	}
+
 
 	/**
 	 * Cập nhật thông tin khách hàng.

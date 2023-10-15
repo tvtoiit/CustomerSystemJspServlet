@@ -32,7 +32,7 @@
 				</a>
 			</div>
 			<div class = "search-container__line"></div>
-		<form id = "form-Search" action ="/CustomerJspServlet/T002" method = "POST">
+		<form id = "form-Search" action ="./T002" method = "POST">
 			<div class = "search-container__handalSearch">
 				<div class = "search-container__handalSearch--margin handalSearch-customerName">
 					<div class = "handalSearch-customercommon handalSearch-customerName__text">Customer Name</div>
@@ -73,8 +73,7 @@
 					<button type ="submit" name="searchAction" value="searchAction" id ="btnSearch">Search</button>
 				</div>
 			</div>
-		
-			
+	
 			<div class="search-container__btnContext--chuyenhuong">
 		    <div class="search-container__btnContext--start">
 		        <button type="submit" name="pageAction" value="first">&lt;&lt;</button>

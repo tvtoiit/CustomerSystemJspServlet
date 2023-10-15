@@ -23,103 +23,92 @@ public class T002 extends HttpServlet {
 	mstcustomer t002Dto = new mstcustomer();
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		List<mstcustomer> result = t002Dao.getData();
-	    showData(req, result);
+		List<mstcustomer> getDataAll = t002Dao.getData();
+		List<mstcustomer> resultPagaOne = paginateList(getDataAll, 1, 15);
+		t002Dto.setPageData(resultPagaOne);
+		
+		req.setAttribute("model", t002Dto);
+		req.setAttribute("tag", 1);
+		
+		int endPage = calculateEndPage(getDataAll.size(), 15);
+		req.setAttribute("endl", endPage);
 	    RequestDispatcher myRD = req.getRequestDispatcher(Constants.T002_SEARCH);
 	    myRD.forward(req, resp);
 	}
 	
-	
-	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse resp) throws ServletException, IOException {
 	    resp.setContentType("text/html");
+	    List<mstcustomer> listPaga = handleActions(request, t002Dao);
 	    
-	    // Lấy dữ liệu từ các trường đầu vào
-	    String name = request.getParameter("txtCustomerName");
-	    String sex = request.getParameter("browser");
-	    String birthdayFrom = request.getParameter("txtBirthdayFromName");
-	    String birthdayTo = request.getParameter("txtBirthdayToName");
-	    String tag = request.getParameter("currentPage");
-	    String pageStr = request.getParameter("pageAction");
-	    String search = request.getParameter("searchAction");
-	    String delete = request.getParameter("deleteAction");
-	    String[] selectedCustomerIds = request.getParameterValues("selectedCustomers");
-	    
-	    // Xử lý tìm kiếm
-	    if (search != null && !search.isEmpty()) {
-	    	if (search.equals("searchAction")) {
-		        handleSearch(request, name, sex, birthdayFrom, birthdayTo, tag, pageStr, selectedCustomerIds);
-		    }
-	    }
-	    
-	    // Xử lý xóa
-	    if (delete != null && !delete.isEmpty()) {
-	    	if (delete.equals("deleteAction")) {
-		        handleDelete(selectedCustomerIds);
-		        List<mstcustomer> result = t002Dao.getData();
-		        showData(request, result);
-		    }
-	    }
+	    int pageSize = 15;
+        
+        int endPage = calculateEndPage(listPaga.size(), pageSize);
+        
+        int page = handlePagination(request, endPage);
+        
+        List<mstcustomer> paginatedList = paginateList(listPaga, page, pageSize);
+        t002Dto.setPageData(paginatedList);
+        request.setAttribute("tag", page);
+        request.setAttribute("endl", endPage);
+        request.setAttribute("model", t002Dto);
 	    
 	    RequestDispatcher dispatcher = request.getRequestDispatcher(Constants.T002_SEARCH);
 	    dispatcher.forward(request, resp);
 	}
-
-	// Hàm xử lý tìm kiếm
-	private void handleSearch(HttpServletRequest request, String name, String sex, String birthdayFrom, String birthdayTo, String tag, String pageStr, String[] selectedCustomerIds) {
-	    // Tìm kiếm dữ liệu dựa trên các tham số đầu vào
-	    List<mstcustomer> resultSearch = t002Dao.getDataSearch(name, sex, birthdayFrom, birthdayTo);
+	
+	private int handlePagination(HttpServletRequest request, int endPage) {
+        String currentPageStr = request.getParameter("currentPage");
+        int currentPage;
+        if (currentPageStr != null && !currentPageStr.isEmpty()) {
+            currentPage = Integer.parseInt(currentPageStr);
+        } else {
+        	// Nếu không có "currentPage" hoặc nó trống, mặc định là trang đầu tiên (1).
+            currentPage = 1; 
+        }
+     // Gọi phương thức getPage để phân trang và trả về trang hiện tại.
+        return getPage(request, currentPage, endPage);
+    }
+	
+	private int calculateEndPage(int totalItems, int pageSize) {
+        int endPage = totalItems / pageSize;
+        if (totalItems % pageSize != 0) {
+            endPage++;
+        }
+        return endPage;
+    }
+	
+	private List<mstcustomer> handleActions(HttpServletRequest request, T002Dao t002Dao) {
+		String search = request.getParameter("searchAction");
+	    String delete = request.getParameter("deleteAction");
+	    String name = request.getParameter("txtCustomerName");
+	    String sex = request.getParameter("browser");
+	    String birthdayFrom = request.getParameter("txtBirthdayFromName");
+	    String birthdayTo = request.getParameter("txtBirthdayToName");
 	    
-	    if (tag == null || tag.isEmpty()) {
-	        request.setAttribute("tag", 1);
+	    String[] selectedCustomerIds = request.getParameterValues("selectedCustomers");
+	    if (search != null && search.equals("searchAction")) {
+	    	return handleSearch(name, sex, birthdayFrom, birthdayTo);
+	    } else if (delete != null && delete.equals("deleteAction")) {
+	    	handleDelete(selectedCustomerIds);
 	    }
-	    
-	    int endPage = resultSearch.size() / 15;
-	    if (resultSearch.size() % 15 != 0) {
-	        endPage++;
-	    }
-	    
-	    if (resultSearch.size() > 15) {
-	        int page = getPage(Integer.parseInt(tag), pageStr, endPage);
-	        request.setAttribute("tag", page);
-	        List<mstcustomer> pageData = paginateList(resultSearch, page, 15);
-	        t002Dto.setPageData(pageData);
-	    } else {
-	        request.setAttribute("tag", 1);
-	        t002Dto.setPage(1);
-	        t002Dto.setPageData(paginateList(resultSearch, 1, 15));
-	    }
-	    
-	    request.setAttribute("endl", endPage == 0 ? 1 : endPage);
-	    request.setAttribute("name", name);
-	    request.setAttribute("sex", sex);
-	    request.setAttribute("birthdayFrom", birthdayFrom);
-	    request.setAttribute("birthdayTo", birthdayTo);
-	    request.setAttribute("model", t002Dto);
+	    return t002Dao.getData();
 	}
 
-	// Hàm xử lý xóa
+	private List<mstcustomer> handleSearch(String name, String sex, String birthdayFrom, String birthdayTo) {
+	    List<mstcustomer> resultSearch = t002Dao.getDataSearch(name, sex, birthdayFrom, birthdayTo);
+	    return resultSearch;
+	}
+
+	/**
+	 * Xóa dữ liệu khách hàng dựa trên danh sách các ID được chọn.
+	 * 
+	 * @param selectedCustomerIds Một mảng chứa các ID của các khách hàng cần xóa.
+	 */
 	private void handleDelete(String[] selectedCustomerIds) {
 	    if (selectedCustomerIds != null) {
 	        t002Dao.deleteData(selectedCustomerIds);
 	    }
-	}
-	
-	private void showData(HttpServletRequest req, List<mstcustomer> result) {
-	    if (result.size() > 15) {
-	        int endPage = result.size() / 15;
-	        if (result.size() % 15 != 0) {
-	            endPage++;
-	        }
-	        req.setAttribute("endl", endPage);
-	        t002Dto.setPageData(paginateList(result, 1, 15));
-	    } else {
-	        t002Dto.setPageData(result);
-	        req.setAttribute("endl", 1);
-	    }
-	    req.setAttribute("model", t002Dto);
-	    req.setAttribute("tag", 1);
 	}
 
 	/**
@@ -130,9 +119,9 @@ public class T002 extends HttpServlet {
 	 * @param endPage     Trang cuối cùng.
 	 * @return Trang mới sau khi xử lý hành động yêu cầu.
 	 */
-	private int getPage(int currentPage, String pageAction, int endPage) {
+	private int getPage(HttpServletRequest request, int currentPage, int endPage) {
+		String pageAction = request.getParameter("pageAction");
 	    if (pageAction != null && !pageAction.isEmpty()) {
-	    	// Xử lý các hành động yêu cầu khác nhau
 	        if (pageAction.equals("first")) {
 	            return 1;
 	        } else if (pageAction.equals("previous")) {
@@ -155,7 +144,7 @@ public class T002 extends HttpServlet {
 	 * @param <T>       Kiểu dữ liệu của danh sách.
 	 * @return Danh sách con chứa dữ liệu của trang hiện tại hoặc danh sách trống nếu tham số không hợp lệ hoặc không có dữ liệu cho trang hiện tại.
 	 */
-	public static <T> List<T> paginateList(List<T> fullList, int page, int pageSize) {
+	public static List<mstcustomer> paginateList(List<mstcustomer> fullList, int page, int pageSize) {
 	    // Kiểm tra nếu danh sách đầy đủ là null hoặc trống hoặc tham số không hợp lệ
 	    if (fullList == null || fullList.isEmpty() || page <= 0 || pageSize <= 0) {
 	        // Trả về danh sách trống nếu tham số không hợp lệ hoặc không có dữ liệu

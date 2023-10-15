@@ -61,7 +61,6 @@ public class T001 extends HttpServlet {
 			
 			if (result != null && !result.isEmpty() && result.get(0) > 0) {
 				
-				// Nếu đăng nhập thành công (kết quả đếm > 0), bạn có thể gọi hàm `getUserInfo` để lấy thông tin người dùng
 	            List<mstuser> userInfo = t001Dao.getUserInfo(inputUsername, inputPassword);
 	            
 	            if (!userInfo.isEmpty()) {

@@ -10,6 +10,6 @@ import fjs.cs.dto.mstcustomer;
  */
 public interface IT003Dao {
 	int save(mstcustomer ms, BigDecimal loggedInPsnCd );
-	List<mstcustomer> getCustomerById(Integer id);
+	mstcustomer getCustomerById(Integer id);
 	void update(mstcustomer ms);
 }
