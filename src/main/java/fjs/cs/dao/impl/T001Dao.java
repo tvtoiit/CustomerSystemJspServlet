@@ -3,11 +3,11 @@ package fjs.cs.dao.impl;
 import java.util.List;
 
 import fjs.cs.dao.IT001Dao;
-import fjs.cs.dto.mstuser;
+import fjs.cs.dto.MstUser;
 import fjs.cs.rowmapper.MstUserMapper;
 import fjs.cs.rowmapper.T001Mapper;
 
-public class T001Dao extends AbstractDao<mstuser> implements IT001Dao {
+public class T001Dao extends AbstractDao<MstUser> implements IT001Dao {
 	/**
 	 * Kiểm tra đăng nhập của người dùng sử dụng tên người dùng và mật khẩu.
 	 *
@@ -40,9 +40,9 @@ public class T001Dao extends AbstractDao<mstuser> implements IT001Dao {
 	 * @return 	Danh sách các đối tượng mstuser chứa thông tin người dùng tìm thấy.
 	 */
 	@Override
-	public List<mstuser> getUserInfo(String userId, String passWord) {
+	public List<MstUser> getUserInfo(String userId, String passWord) {
 	    String query = "SELECT * FROM MSTUSER WHERE DELETE_YMD IS NULL AND USERID = ? AND PASSWORD = ?";
-	    List<mstuser> results = query(query, new MstUserMapper(), userId, passWord);
+	    List<MstUser> results = query(query, new MstUserMapper(), userId, passWord);
 		return results;
 	}
 }

@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import fjs.cs.common.Constants;
 import fjs.cs.dao.impl.T003Dao;
-import fjs.cs.dto.mstcustomer;
+import fjs.cs.dto.MstCustomer;
 
 /**
  * Servlet này xử lý các yêu cầu liên quan đến quản lý thông tin khách hàng.
@@ -27,7 +27,7 @@ public class T003 extends HttpServlet {
 		String id = request.getParameter("id");
 		if (id != null) {
 			try {
-				mstcustomer listCustomerById = t003Dao.getCustomerById(Integer.parseInt(id));
+				MstCustomer listCustomerById = t003Dao.getCustomerById(Integer.parseInt(id));
 				request.setAttribute("id", listCustomerById.getCustomerId());
 				request.setAttribute("name", listCustomerById.getCustomerName());
 				request.setAttribute("sex", listCustomerById.getSex());
@@ -65,7 +65,7 @@ public class T003 extends HttpServlet {
 
 	private void updateCustomer(String id, String name, String sex, String birthday, String email, String address) {
 	    try {
-	        mstcustomer dtoUpdate = new mstcustomer();
+	        MstCustomer dtoUpdate = new MstCustomer();
 	        if (id != null) {
 	        	BigDecimal idBigDecimal = new BigDecimal(id);
 	        	dtoUpdate.setCustomerId(idBigDecimal);
@@ -82,7 +82,7 @@ public class T003 extends HttpServlet {
 	}
 
 	private void createCustomer(String name, String sex, String birthday, String email, String address, BigDecimal loggedInPsnCd) {
-	    mstcustomer newCustomer = new mstcustomer();
+	    MstCustomer newCustomer = new MstCustomer();
 	    newCustomer.setCustomerName(name);
 	    newCustomer.setSex(sex);
 	    newCustomer.setBirthDay(birthday);

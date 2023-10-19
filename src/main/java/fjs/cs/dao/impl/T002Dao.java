@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fjs.cs.dao.IT002Dao;
-import fjs.cs.dto.mstcustomer;
+import fjs.cs.dto.MstCustomer;
 import fjs.cs.rowmapper.T002Mapper;
 
 /**
  * Lớp T002Dao là một DAO (Data Access Object) dùng để thực hiện các thao tác liên quan đến dữ liệu mstcustomer.
  * Lớp này dùng để mở rộng giao diện IT002Dao
  */
-public class T002Dao extends AbstractDao<mstcustomer> implements IT002Dao {
+public class T002Dao extends AbstractDao<MstCustomer> implements IT002Dao {
 
 	/**
 	 * Lấy danh sách dữ liệu từ bảng mstcustomer.
@@ -19,7 +19,7 @@ public class T002Dao extends AbstractDao<mstcustomer> implements IT002Dao {
 	 * @return Danh sách dữ liệu mstcustomer.
 	 */
 	@Override
-	public List<mstcustomer> getData() {
+	public List<MstCustomer> getData() {
 		String sql = "SELECT CUSTOMER_ID, CUSTOMER_NAME, CASE WHEN SEX = 0 THEN 'Male' ELSE 'Female' END AS SEX, BIRTHDAY, ADDRESS FROM mstcustomer WHERE DELETE_YMD IS NULL ORDER BY CUSTOMER_ID";
 		return query(sql, new T002Mapper());
 	}
@@ -34,7 +34,7 @@ public class T002Dao extends AbstractDao<mstcustomer> implements IT002Dao {
 	 * @return Danh sách khách hàng thỏa mãn các điều kiện tìm kiếm, được sắp xếp theo CUSTOMER_ID.
 	 */
 	@Override
-	public List<mstcustomer> getDataSearch(String name, String sex, String birthdayFrom, String birthdayTo) {
+	public List<MstCustomer> getDataSearch(String name, String sex, String birthdayFrom, String birthdayTo) {
 		// Xây dựng truy vấn SQL
 		StringBuilder query = new StringBuilder("SELECT CUSTOMER_ID, CUSTOMER_NAME, CASE WHEN SEX = 0 THEN 'Male' else 'Female' end as SEX, BIRTHDAY, ADDRESS ")
 				.append("FROM MSTCUSTOMER ")
@@ -75,8 +75,8 @@ public class T002Dao extends AbstractDao<mstcustomer> implements IT002Dao {
 	}
 
 	@Override
-	public List<mstcustomer> deleteData(String[] selecValue) {
-	    List<mstcustomer> listDelete = new ArrayList<mstcustomer>();
+	public List<MstCustomer> deleteData(String[] selecValue) {
+	    List<MstCustomer> listDelete = new ArrayList<MstCustomer>();
 	    try {
 	        String query = "UPDATE MSTCUSTOMER "
 	                     + "SET Delete_YMD = CURRENT_TIMESTAMP "

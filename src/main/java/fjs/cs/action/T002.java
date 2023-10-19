@@ -13,18 +13,18 @@ import javax.servlet.http.HttpServletResponse;
 
 import fjs.cs.common.Constants;
 import fjs.cs.dao.impl.T002Dao;
-import fjs.cs.dto.mstcustomer;
+import fjs.cs.dto.MstCustomer;
 
 @WebServlet("/T002")
 public class T002 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	T002Dao t002Dao = new T002Dao();
-	mstcustomer t002Dto = new mstcustomer();
+	MstCustomer t002Dto = new MstCustomer();
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		List<mstcustomer> getDataAll = t002Dao.getData();
-		List<mstcustomer> resultPagaOne = paginateList(getDataAll, 1, 15);
+		List<MstCustomer> getDataAll = t002Dao.getData();
+		List<MstCustomer> resultPagaOne = paginateList(getDataAll, 1, 15);
 		t002Dto.setPageData(resultPagaOne);
 		
 		req.setAttribute("model", t002Dto);
@@ -39,7 +39,7 @@ public class T002 extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse resp) throws ServletException, IOException {
 	    resp.setContentType("text/html");
-	    List<mstcustomer> listPaga = handleActions(request, t002Dao);
+	    List<MstCustomer> listPaga = handleActions(request, t002Dao);
 	    
 	    int pageSize = 15;
         
@@ -47,7 +47,7 @@ public class T002 extends HttpServlet {
         
         int page = handlePagination(request, endPage);
         
-        List<mstcustomer> paginatedList = paginateList(listPaga, page, pageSize);
+        List<MstCustomer> paginatedList = paginateList(listPaga, page, pageSize);
         t002Dto.setPageData(paginatedList);
         request.setAttribute("tag", page);
         request.setAttribute("endl", endPage);
@@ -78,7 +78,7 @@ public class T002 extends HttpServlet {
         return endPage;
     }
 	
-	private List<mstcustomer> handleActions(HttpServletRequest request, T002Dao t002Dao) {
+	private List<MstCustomer> handleActions(HttpServletRequest request, T002Dao t002Dao) {
 		String search = request.getParameter("searchAction");
 	    String delete = request.getParameter("deleteAction");
 	    String name = request.getParameter("txtCustomerName");
@@ -95,8 +95,8 @@ public class T002 extends HttpServlet {
 	    return t002Dao.getData();
 	}
 
-	private List<mstcustomer> handleSearch(String name, String sex, String birthdayFrom, String birthdayTo) {
-	    List<mstcustomer> resultSearch = t002Dao.getDataSearch(name, sex, birthdayFrom, birthdayTo);
+	private List<MstCustomer> handleSearch(String name, String sex, String birthdayFrom, String birthdayTo) {
+	    List<MstCustomer> resultSearch = t002Dao.getDataSearch(name, sex, birthdayFrom, birthdayTo);
 	    return resultSearch;
 	}
 
@@ -144,7 +144,7 @@ public class T002 extends HttpServlet {
 	 * @param <T>       Kiểu dữ liệu của danh sách.
 	 * @return Danh sách con chứa dữ liệu của trang hiện tại hoặc danh sách trống nếu tham số không hợp lệ hoặc không có dữ liệu cho trang hiện tại.
 	 */
-	public static List<mstcustomer> paginateList(List<mstcustomer> fullList, int page, int pageSize) {
+	public static List<MstCustomer> paginateList(List<MstCustomer> fullList, int page, int pageSize) {
 	    // Kiểm tra nếu danh sách đầy đủ là null hoặc trống hoặc tham số không hợp lệ
 	    if (fullList == null || fullList.isEmpty() || page <= 0 || pageSize <= 0) {
 	        // Trả về danh sách trống nếu tham số không hợp lệ hoặc không có dữ liệu

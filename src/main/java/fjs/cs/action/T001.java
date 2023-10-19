@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import fjs.cs.common.Constants;
 import fjs.cs.dao.impl.T001Dao;
-import fjs.cs.dto.mstuser;
+import fjs.cs.dto.MstUser;
 
 @WebServlet("/T001")
 public class T001 extends HttpServlet {
@@ -61,11 +61,11 @@ public class T001 extends HttpServlet {
 			
 			if (result != null && !result.isEmpty() && result.get(0) > 0) {
 				
-	            List<mstuser> userInfo = t001Dao.getUserInfo(inputUsername, inputPassword);
+	            List<MstUser> userInfo = t001Dao.getUserInfo(inputUsername, inputPassword);
 	            
 	            if (!userInfo.isEmpty()) {
 	                HttpSession session = req.getSession();
-	                for (mstuser c : userInfo) {
+	                for (MstUser c : userInfo) {
 	                	BigDecimal loggedInPsnCd = c.getPsnCd();
 	                	session.setAttribute("loggedInPsnCd", loggedInPsnCd);
 	                }
@@ -89,11 +89,6 @@ public class T001 extends HttpServlet {
 	
 	/**
 	 * Chuyển hướng yêu cầu đến trang đăng nhập (T001_LOGIN).
-	 * 
-	 * @param req 	HttpServletRequest yêu cầu.
-	 * @param resp	HttpServletResponse xử lý phản hồi.
-	 * @throws ServletException Nếu có lỗi trong quá trình xử lí yêu cầu.
-	 * @throws IOException Nếu có lỗi trong việc xử lí đầu ra.
 	 */
 	private void showLoginPage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         RequestDispatcher dispatcher = req.getRequestDispatcher(Constants.T001_LOGIN);

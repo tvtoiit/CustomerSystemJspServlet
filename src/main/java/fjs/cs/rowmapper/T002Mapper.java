@@ -2,14 +2,14 @@ package fjs.cs.rowmapper;
 
 import java.sql.ResultSet;
 
-import fjs.cs.dto.mstcustomer;
+import fjs.cs.dto.MstCustomer;
 
-public class T002Mapper implements RowMapper<mstcustomer> {
+public class T002Mapper implements RowMapper<MstCustomer> {
 
 	@Override
-	public mstcustomer mapRow(ResultSet resultSet) {
+	public MstCustomer mapRow(ResultSet resultSet) {
 		try {
-			mstcustomer t002Dto = new mstcustomer();
+			MstCustomer t002Dto = new MstCustomer();
 			t002Dto.setCustomerId(resultSet.getBigDecimal("CUSTOMER_ID"));
 			t002Dto.setCustomerName(resultSet.getString("CUSTOMER_NAME"));
 			t002Dto.setSex(resultSet.getString("SEX"));

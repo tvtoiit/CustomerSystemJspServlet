@@ -4,10 +4,10 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import fjs.cs.dao.IT003Dao;
-import fjs.cs.dto.mstcustomer;
+import fjs.cs.dto.MstCustomer;
 import fjs.cs.rowmapper.T003Mapper;
 
-public class T003Dao extends AbstractDao<mstcustomer> implements IT003Dao {
+public class T003Dao extends AbstractDao<MstCustomer> implements IT003Dao {
 	
 	/**
 	 * Lưu thông tin khách hàng.
@@ -17,7 +17,7 @@ public class T003Dao extends AbstractDao<mstcustomer> implements IT003Dao {
 	 * @return 	Số lượng bản ghi được thêm vào.
 	 */
 	@Override
-	public int save(mstcustomer ms, BigDecimal loggedInPsnCd) {
+	public int save(MstCustomer ms, BigDecimal loggedInPsnCd) {
 		StringBuilder sql = new StringBuilder("INSERT INTO MSTCUSTOMER (CUSTOMER_NAME, SEX, BIRTHDAY, EMAIL, ADDRESS, DELETE_YMD, INSERT_YMD, INSERT_PSN_CD, UPDATE_YMD, UPDATE_PSN_CD)");
 	    sql.append(" VALUES (?, ?, ?, ?, ?, NULL, CURRENT_TIMESTAMP, ?, CURRENT_TIMESTAMP, ?)");
 	    return insert(sql.toString(), ms.getCustomerName(), ms.getSex(), ms.getBirthDay(), ms.getEmail(), ms.getAddress(), loggedInPsnCd, loggedInPsnCd);
@@ -30,9 +30,9 @@ public class T003Dao extends AbstractDao<mstcustomer> implements IT003Dao {
 	 * @return 	Danh sách các đối tượng mstcustomer chứa thông tin khách hàng tìm thấy.
 	 */
 	@Override
-	public mstcustomer getCustomerById(Integer id) {
+	public MstCustomer getCustomerById(Integer id) {
 	    String sql = "SELECT CUSTOMER_ID, CUSTOMER_NAME, SEX, BIRTHDAY, EMAIL, ADDRESS FROM mstcustomer WHERE CUSTOMER_ID = ?";
-	    List<mstcustomer> customers = query(sql, new T003Mapper(), id);
+	    List<MstCustomer> customers = query(sql, new T003Mapper(), id);
 	    if (customers != null && !customers.isEmpty()) {
 	        return customers.get(0); // Trả về khách hàng đầu tiên nếu có
 	    } else {
@@ -47,7 +47,7 @@ public class T003Dao extends AbstractDao<mstcustomer> implements IT003Dao {
 	 * @param 	ms Đối tượng mstcustomer chứa thông tin khách hàng cần cập nhật.
 	 */
 	@Override
-	public void update(mstcustomer ms) {
+	public void update(MstCustomer ms) {
 		String sql = "UPDATE MSTCUSTOMER SET CUSTOMER_NAME = ?, SEX = ?, BIRTHDAY = ?, EMAIL = ?, ADDRESS = ?, DELETE_YMD = NULL, UPDATE_YMD = CURRENT_TIMESTAMP WHERE CUSTOMER_ID = ?";
 		update(sql, ms.getCustomerName(), ms.getSex(), ms.getBirthDay(), ms.getEmail(), ms.getAddress(), ms.getCustomerId());
 	}
